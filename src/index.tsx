@@ -1,21 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, Store } from "redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
+import rootReducers, { RootAction, RootState, combineReducer } from "reducers";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+const store: Store<RootState, RootAction> = createStore(
+  combineReducer,
+  devToolsEnhancer({ trace: true })
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+console.log(store.getState());
+
+setTimeout(() => {
+  store.dispatch({
+    type: "ADD_CHAT_LOG",
+    payload: "ccc",
+  });
+}, 1000);
+
+store.subscribe(() => {
+  console.log(store.getState());
+
+  render();
+});
+
+const App: React.FC = () => {
+  return (
+    <div>
+      <section>123</section>
+      <button>inc</button>
+      <button>desc</button>
+    </div>
+  );
+};
+
+render();
+
+function render() {
+  ReactDOM.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+}
