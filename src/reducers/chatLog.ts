@@ -1,5 +1,8 @@
-import type {RootAction} from 'reducers'
-export type ChatLogAction = { type: "ADD_CHAT_LOG"; payload: string };
+import type { RootAction } from "reducers";
+export type ChatLogAction = {
+  type: "ADD_CHAT_LOG";
+  payload: string;
+};
 
 export type ChatLogState = string[];
 export function chatLog(state: ChatLogState = [], action: RootAction) {
