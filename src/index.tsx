@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import rootReducers, { RootAction, RootState, combineReducer } from "reducers";
+import rootReducers, { combineReducer, RootAction, RootState } from "reducers";
 
 const store: Store<RootState, RootAction> = createStore(
   combineReducer,
@@ -14,8 +14,23 @@ console.log(store.getState());
 
 setTimeout(() => {
   store.dispatch({
-    type: "ADD_CHAT_LOG",
-    payload: "ccc",
+    type: "add_post",
+    post: {
+      id: "1",
+      title: "new post",
+      content: "new content",
+    },
+  });
+}, 1000);
+
+setTimeout(() => {
+  store.dispatch({
+    type: "login",
+    user: {
+      username: "zhangsan",
+      gender: 1,
+      age: 18,
+    },
   });
 }, 1000);
 
