@@ -1,39 +1,38 @@
-import { chatLog, ChatLogAction } from "reducers/chatLog";
-import { statusMessage, StatusMessageAction } from "reducers/statusMessage";
-import { username, UserNameAction } from "reducers/username";
+import { post, PostAction, PostState } from "reducers/post";
+import { user, UserAction, UserState } from "reducers/user";
 import { combineReducers } from "redux";
 
-/* type ChatLogAction = { type: "ADD_CHAT_LOG"; payload: string };
-type StatusMessageAction = { type: "CHANGE_STATUS"; payload: string };
-type UserNameAction = { type: "SET_USERNAME"; payload: string };
- */
-export type RootAction = ChatLogAction | StatusMessageAction | UserNameAction;
+export type RootAction = PostAction | UserAction;
 
 export type RootState = {
-  chatLog: string[];
-  statusMessage: string;
-  username: string;
+  user: UserState;
+  post: PostState;
 };
 
 const initState: RootState = {
-  chatLog: [],
-  statusMessage: "",
-  username: "",
+  user: {
+    username: "",
+    gender: 0,
+    age: 0,
+  },
+  post: {
+    id: "",
+    title: "",
+    content: "",
+  },
 };
 
 export default function rootReducers(
-  state: RootState = initState,
+  state: RootState,
   action: RootAction
 ) {
   return {
-    chatLog: chatLog(state.chatLog, action),
-    statusMessage: statusMessage(state.statusMessage, action),
-    username: username(state.username, action),
+    post: post(state.post, action),
+    user: user(state.user, action),
   };
 }
 
 export const combineReducer = combineReducers({
-  chatLog,
-  statusMessage,
-  username,
+  post,
+  user,
 });
